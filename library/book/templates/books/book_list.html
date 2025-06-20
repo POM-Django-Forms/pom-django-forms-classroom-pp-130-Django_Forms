@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Список книг</title>
+    <style>
+        body {
+            background-color: #fff0f0;
+            color: #8b0000;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .container {
+            background: white;
+            padding: 30px 40px;
+            border: 2px solid #cc0000;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(204, 0, 0, 0.3);
+            width: 450px;
+            text-align: center;
+        }
+        h1 {
+            margin-bottom: 20px;
+            color: #cc0000;
+        }
+        ul {
+            list-style: none;
+            padding-left: 0;
+            margin: 0 0 25px 0;
+            max-height: 300px;
+            overflow-y: auto;
+            text-align: left;
+        }
+        li {
+            background: #ffe6e6;
+            padding: 12px;
+            margin-bottom: 8px;
+            border-radius: 5px;
+            border: 1px solid #cc0000;
+            font-weight: 600;
+        }
+        .authors {
+            font-size: 0.9em;
+            color: #a00000;
+        }
+        a {
+            display: inline-block;
+            color: #cc0000;
+            text-decoration: none;
+            font-weight: bold;
+            padding: 10px 20px;
+            border: 2px solid #cc0000;
+            border-radius: 5px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        a:hover {
+            background-color: #cc0000;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Список книг</h1>
+        <ul>
+          {% for book in books %}
+            <li>
+                <strong>{{ book.name }}</strong> ({{ book.count }})<br>
+                <span class="authors">
+                    Автор(и): 
+                    {% for author in book.authors.all %}
+                        {{ author.surname }} {{ author.name }}{% if not forloop.last %}, {% endif %}
+                    {% empty %}
+                        Немає авторів
+                    {% endfor %}
+                </span>
+            </li>
+          {% empty %}
+            <li>Книг немає</li>
+          {% endfor %}
+        </ul>
+        <a href="{% url 'book_add' %}">Додати нову книгу</a>
+    </div>
+</body>
+</html>
